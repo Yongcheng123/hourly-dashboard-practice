@@ -14,46 +14,44 @@ the feature, runs tests, and opens the pull request.
 
 ## 参与者 Prompt
 
-Replace only `<YOUR_MOBIUS_USER_NAME>` and paste the whole block into your
-private Hermes Studio conversation:
+Replace only `<YOUR_MOBIUS_USER_NAME>`. In ClickClack `#general`, mention your
+own bot, paste the prompt in the same message, and move the remaining
+conversation into that message's thread.
 
 ```text
-你是我在 Hourly Dashboard Workshop 中的开发 Agent。
+开始 Hourly Dashboard Workshop 阶段二。
 
 我的 Mobius 用户名：<YOUR_MOBIUS_USER_NAME>
-Mobius 团队：周四练习（THU）
 父 Issue：THU-1
-代码仓库：https://github.com/Yongcheng123/hourly-dashboard-practice
-参与者 PR 的 Base 分支：integration/workshop
+Repo：https://github.com/Yongcheng123/hourly-dashboard-practice
+PR Base：integration/workshop
 
-请替我完整执行以下流程：
+请持续执行到 PR 创建完成；只有缺少 Access 或遇到真实阻塞时才问我。
 
-1. 确认你可以读取和更新 Mobius，并且可以使用 GitHub。如果缺少权限，
-   立即向我申请 Access；我批准后继续执行，不要静默停止。
-2. 读取 THU-1 及其所有直接子 Issue。可认领的 Issue 必须没有 Assignee、
-   状态为 Todo 或 Backlog，并且没有其他参与者留下的 TAKEN 评论。
-3. 在认领前立即刷新列表，随机选择一个符合条件的 Issue，分配给我提供的准确
-   Mobius 用户名，改为 In Progress，并添加包含 Owner、当前 Bot 和时间的
-   TAKEN 评论。
-4. 验证 Assignee 和状态。如果其他参与者抢先认领，不要覆盖对方，改选另一个。
-   如果没有可用 Issue，停止并告诉我。
-5. 阅读完整 Issue 和 Acceptance Criteria，直接添加包含允许文件、方案和风险的
-   PLAN 评论，不要让我手动填写。
-6. Fork 或 Clone 仓库，以 upstream/integration/workshop 为起点创建
-   feat/<CLAIMED_ISSUE_ID>-<SHORT_NAME>。
-7. 只修改 Issue 允许的文件；除非明确允许，不要修改 DashboardShell、
-   RawHourlyTable、SourceComparisonTable、globals.css、Chime 数据文件、
-   共享 data/types、package.json 或 lockfile。
-8. 使用仓库内置的三张 Chime 固定快照完成功能；不连接实时 API，不伪造
-   Agent_B 缺失小时，并保持响应式和可访问。
-9. 如遇阻塞，先在 Mobius 添加 BLOCKED 评论，再向我申请 Access 或决策。
-10. 运行 npm run lint 和 npm test，并在允许范围内修复失败项。
-11. Commit、Push，并向
-    Yongcheng123/hourly-dashboard-practice:integration/workshop 创建 PR；
-    PR 标题必须包含 Mobius Issue ID。
-12. 添加包含 Branch、PR URL、文件、测试和风险的 READY 评论，把 Issue 改为
-    In Review；不要让我手动填写。
-13. 最后只报告 Issue、Branch、PR、测试和需人工检查的事项。绝不自行合并。
+1. 刷新 THU-1 的直接子 Issues，随机认领一个满足以下条件的任务：
+   无 Assignee、状态为 Todo/Backlog、没有他人的 TAKEN 评论。
+   将它分配给我的 Mobius 用户名，改为 In Progress，评论 TAKEN，并重新读取确认。
+   如果被别人抢先认领，选择另一个；没有可用任务时停止。
+
+2. 阅读该 Issue 的完整描述和 Acceptance Criteria，以及 Repo 中的
+   WORKSHOP.md 和 CONTRIBUTING.md。Issue 是允许修改文件和验收范围的权威来源。
+   在 Mobius 评论 PLAN，然后直接开始开发。
+
+3. Fork 或 Clone Repo，以 upstream/integration/workshop 为起点创建：
+   feat/<ISSUE_ID>-<SHORT_NAME>
+   只修改 Issue 允许的文件，不扩大任务范围。
+
+4. 完成功能并运行 npm run lint 和 npm test；只在允许范围内修复问题。
+
+5. Commit、Push，并向
+   Yongcheng123/hourly-dashboard-practice:integration/workshop 创建 PR。
+   PR 标题必须包含 Mobius Issue ID。
+
+6. 在 Mobius 评论 READY，包含 Branch、PR URL、修改文件、测试结果和风险，
+   然后把 Issue 改为 In Review。
+   遇到阻塞时先评论 BLOCKED，再向我说明需要的 Access 或决策。
+
+7. 最后只报告 Issue、Branch、PR、测试结果和人工检查事项。不要自行合并 PR。
 ```
 
 ## Reserved host task
