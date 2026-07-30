@@ -1,4 +1,5 @@
 export type ChimeHourlyRow = {
+  source: ChimeSourceId;
   date: string;
   hour: string;
   impressions: number | null;
@@ -20,7 +21,9 @@ export type ChimeHourlyRow = {
   netCpe: number | null;
 };
 
-// Captured from the Chime FeedTV hourly sheet on 2026-07-29.
+export type ChimeSourceId = "lg-pmp" | "freewheel-fm" | "freewheel-agent-b";
+
+// Captured from the Freewheel FM agent Chime FeedTV sheet on 2026-07-29.
 // The rows are cumulative hourly values in EST. "~" represents the source's "-".
 const raw = `date|hour|impressions|installs|ipm|enrollWeb|enrollInApp|enrollTotal|netSpend|grossSpend|netCpm|grossCpm|marginPercent|marginDollars|grossCpi|netCpi|cvr|grossCpe|netCpe
 2026-07-24|12AM|815|0|0.00|0|0|0|10.29|14.70|12.63|18.04|30.00|4.41|~|~|~|~|~
@@ -147,7 +150,11 @@ const raw = `date|hour|impressions|installs|ipm|enrollWeb|enrollInApp|enrollTota
 const parse = (value: string): number | null =>
   value === "~" ? null : Number(value);
 
-export const chimeHourlyRows: ChimeHourlyRow[] = raw
+export const parseChimeRows = (
+  sourceRaw: string,
+  source: ChimeSourceId,
+): ChimeHourlyRow[] =>
+  sourceRaw
   .trim()
   .split("\n")
   .slice(1)
@@ -175,6 +182,7 @@ export const chimeHourlyRows: ChimeHourlyRow[] = raw
     ] = line.split("|");
 
     return {
+      source,
       date,
       hour,
       impressions: parse(impressions),
@@ -196,6 +204,8 @@ export const chimeHourlyRows: ChimeHourlyRow[] = raw
       netCpe: parse(netCpe),
     };
   });
+
+export const chimeHourlyRows = parseChimeRows(raw, "freewheel-fm");
 
 export const chimeDates = [
   "2026-07-24",

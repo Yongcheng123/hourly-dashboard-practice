@@ -31,7 +31,10 @@ test("server-renders the hourly dashboard scaffold", async () => {
   assert.match(html, /<title>Hourly Pulse · Workshop Dashboard<\/title>/i);
   assert.match(html, /Hourly performance/);
   assert.match(html, /Chime snapshot/);
+  assert.match(html, /Chime source comparison/);
   assert.match(html, /Gross spend vs\. installs/);
+  assert.match(html, /Full hourly metrics/);
   assert.match(html, /Five-day daily totals/);
+  assert.match(html, /Chime &lt;&gt; US Freewheel FM Agent_B/);
   assert.match(html, /Mobius/);
 });

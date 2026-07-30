@@ -11,7 +11,8 @@ matching Mobius issue. A Review Agent checks and combines the pull requests.
 ## What is already included
 
 - a responsive hourly operations dashboard
-- original Chime FeedTV hourly data for July 24–28, 2026
+- all three original Chime FeedTV sources for July 24–28, 2026
+- six KPI cards, a three-source comparison, hourly chart, and full 18-metric table
 - eight isolated feature folders to reduce merge conflicts
 - a shared integration branch: `integration/workshop`
 - participant and Review Agent prompts
@@ -69,7 +70,13 @@ To keep PRs mergeable, participants must not change these unless their Mobius
 issue explicitly allows it:
 
 - `app/components/dashboard/DashboardShell.tsx`
+- `app/components/dashboard/RawHourlyTable.tsx`
+- `app/components/dashboard/SourceComparisonTable.tsx`
 - `app/globals.css`
+- `app/data/chimeAgentB.ts`
+- `app/data/chimeCatalog.ts`
+- `app/data/chimeHourlyWeek.ts`
+- `app/data/chimeLgPmp.ts`
 - `app/data/mockDashboard.ts`
 - `app/types/dashboard.ts`
 - `package.json` and `package-lock.json`
@@ -79,12 +86,18 @@ ask the host before changing it.
 
 ## Data architecture
 
-The UI reads 120 original Chime rows (24 hourly rows for each day from
-2026-07-24 through 2026-07-28) from `app/data/chimeHourlyWeek.ts`.
-`app/data/mockDashboard.ts` adapts those rows into the existing workshop
-components. The date selector changes the displayed Chime day. Missing values
-from the source are preserved as `null`, and all 18 source metrics remain
-available for later feature work.
+The UI reads 345 original Chime rows across three FeedTV sources and five
+report dates:
+
+- `Chime <> US (Hourly) - LG PMP`: 120 rows
+- `Chime <> US Freewheel - FM agent (Hourly) - LG PMP`: 120 rows
+- `Chime <> US Freewheel FM Agent_B (Hourly)`: 105 rows
+
+Agent_B contains only nine rows on July 24 in the source; the dashboard
+deliberately preserves that partial day and flags it. `app/data/mockDashboard.ts`
+adapts the source/date selection into the existing workshop components.
+Missing values from FeedTV are preserved as `null`, and all 18 source metrics
+are available in the horizontally scrollable hourly table.
 
 This fixed snapshot keeps the workshop independent of internal credentials. A
 future production iteration can replace the data module with a provider adapter
