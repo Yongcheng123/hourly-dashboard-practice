@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>第二阶段：从 Mobius Issue 到 GitHub PR</title>
+  <style>
+    :root{--ink:#17211e;--muted:#65716c;--line:#dfe6e0;--paper:#f4f7f3;--card:#fff;--green:#134e45;--mint:#b9f4d4;--blue:#174c8c;--amber:#fff3d8}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 8% 0%,rgba(185,244,212,.52),transparent 30rem),var(--paper);color:var(--ink);font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    a{color:var(--blue)}.wrap{width:min(1060px,calc(100% - 32px));margin:auto}.hero{padding:72px 0 40px}.eyebrow{font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--green)}h1{max-width:780px;margin:12px 0;font-size:clamp(36px,6vw,66px);line-height:1.05;letter-spacing:-.055em}h2{margin:0 0 12px;font-size:27px;letter-spacing:-.035em}h3{margin:0 0 8px;font-size:18px}.lead{max-width:760px;color:var(--muted);font-size:18px}.facts{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:28px 0}.fact,.card{border:1px solid var(--line);border-radius:18px;background:rgba(255,255,255,.9);box-shadow:0 18px 52px rgba(30,60,50,.05)}.fact{padding:16px}.fact b,.fact span{display:block}.fact span{color:var(--muted);font-size:12px}.layout{display:grid;grid-template-columns:220px minmax(0,1fr);gap:28px;padding-bottom:70px}.toc{position:sticky;top:20px;align-self:start;padding:16px}.toc a{display:block;padding:7px 10px;border-radius:8px;color:#53615c;text-decoration:none;font-size:13px}.toc a:hover{background:#edf3ee;color:var(--green)}.content{display:grid;gap:18px}.card{padding:26px}.step{display:inline-grid;place-items:center;width:32px;height:32px;margin-bottom:14px;border-radius:10px;background:var(--mint);color:var(--green);font-weight:900}.callout{margin:16px 0;padding:14px 16px;border-left:4px solid #efa90d;border-radius:10px;background:var(--amber);font-size:14px}.ok{border-left-color:#2ca36c;background:#eaf8ef}.code{overflow:hidden;margin:16px 0;border:1px solid #253a35;border-radius:15px;background:#10241f;color:#e9fff5}.code-head{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border-bottom:1px solid #294239;color:#a8cbbf;font-size:12px}.copy{border:0;border-radius:8px;padding:8px 12px;background:#b9f4d4;color:#123d35;font-weight:800}.code pre{overflow:auto;margin:0;padding:18px;white-space:pre-wrap;font:13px/1.55 ui-monospace,SFMono-Regular,Menlo,monospace}.issues{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.issue{padding:13px;border:1px solid var(--line);border-radius:12px;background:#fafcf9}.issue b{color:var(--green)}.flow{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:16px}.flow div{padding:12px 8px;border-radius:12px;background:#eef3ee;text-align:center;font-size:12px;font-weight:750}.checklist{padding-left:22px}.footer{padding:26px 0 50px;color:var(--muted);font-size:13px}@media(max-width:800px){.facts{grid-template-columns:1fr 1fr}.layout{display:block}.toc{position:static;margin-bottom:18px}.issues{grid-template-columns:1fr}.flow{grid-template-columns:1fr}.flow div{text-align:left}}@media(max-width:480px){.facts{grid-template-columns:1fr}.card{padding:20px}}
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="wrap">
+      <p class="eyebrow">Hermes × ClickClack Workshop · Phase 2</p>
+      <h1>从 Mobius Issue 到可合并的 GitHub PR</h1>
+      <p class="lead">每人认领一个独立模块，让自己的 Hermes 完成实现、测试和 PR，并把进度同步回 Mobius。最后由主持人的 Review Agent 统一验收和集成。</p>
+      <div class="facts">
+        <div class="fact"><b>AI-2380</b><span>Mobius 父 Issue</span></div>
+        <div class="fact"><b>8 个模块</b><span>互相尽量不改同一文件</span></div>
+        <div class="fact"><b>integration/workshop</b><span>所有参与者 PR Base</span></div>
+        <div class="fact"><b>35–40 分钟</b><span>第二阶段建议时间</span></div>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap layout">
+    <nav class="card toc">
+      <a href="#ready">0. 开始前确认</a>
+      <a href="#claim">1. 认领 Issue</a>
+      <a href="#prompt">2. 给 Hermes Prompt</a>
+      <a href="#sync">3. 同步 Mobius</a>
+      <a href="#pr">4. 提交 PR</a>
+      <a href="#review">5. Review Agent</a>
+      <a href="#host">主持人检查清单</a>
+    </nav>
+
+    <main class="content">
+      <section class="card" id="ready">
+        <span class="step">0</span>
+        <h2>开始前确认</h2>
+        <ul class="checklist">
+          <li>Phase 1 已完成，自己的 Hermes Bot 在 ClickClack 里可以回复 <code>PONG</code>。</li>
+          <li>可以登录 GitHub；Hermes 需要 GitHub/Mobius 权限时，及时点击允许。</li>
+          <li>本阶段使用公开 Repo 和假数据，不需要 Beeswax MCP 或任何生产 Token。</li>
+        </ul>
+        <div class="callout">不要把 ClickClack Bot Token、API Key 或真实投放数据放进 GitHub、Mobius 或公共频道。</div>
+        <p>Repo：<a href="https://github.com/Yongcheng123/hourly-dashboard-practice">Yongcheng123/hourly-dashboard-practice</a></p>
+      </section>
+
+      <section class="card" id="claim">
+        <span class="step">1</span>
+        <h2>在 Mobius 认领一个 Issue</h2>
+        <p>进入 <b>ken-team → 项目“周四练习” → 父 Issue AI-2380</b>。选择一个仍为 Todo 的子 Issue，分配给自己，改成 In Progress，然后评论 TAKEN。</p>
+        <div class="issues">
+          <div class="issue"><b>AI-2381</b> · KPI Cards</div>
+          <div class="issue"><b>AI-2382</b> · Hourly Chart</div>
+          <div class="issue"><b>AI-2383</b> · Filters</div>
+          <div class="issue"><b>AI-2384</b> · Alerts</div>
+          <div class="issue"><b>AI-2385</b> · Breakdown Table</div>
+          <div class="issue"><b>AI-2386</b> · Analysis</div>
+          <div class="issue"><b>AI-2387</b> · Data Quality</div>
+          <div class="issue"><b>AI-2388</b> · Workshop Status</div>
+        </div>
+        <div class="code">
+          <div class="code-head"><span>Mobius TAKEN 评论</span><button class="copy" type="button">一键复制</button></div>
+          <pre>TAKEN
+Owner: &lt;YOUR_NAME&gt;
+Hermes bot: @&lt;YOUR_BOT_HANDLE&gt;
+Started: &lt;CURRENT_TIME&gt;</pre>
+        </div>
+        <div class="callout ok">一个 Issue 只能由一个人认领。先在 Mobius 留 TAKEN，再开始写代码。</div>
+      </section>
+
+      <section class="card" id="prompt">
+        <span class="step">2</span>
+        <h2>把这段 Prompt 给自己的 Hermes</h2>
+        <p>只替换 3 个占位符：Issue ID、姓名、短分支名。Hermes 请求 GitHub 或 Mobius Access 时要允许，否则它会停下来。</p>
+        <div class="code">
+          <div class="code-head"><span>参与者实施 Prompt</span><button class="copy" type="button">一键复制</button></div>
+          <pre>You are my implementation agent for the Hourly Dashboard workshop.
+
+Mobius issue: &lt;MOBIUS_ISSUE_ID&gt;
+Repository: https://github.com/Yongcheng123/hourly-dashboard-practice
+Integration base: integration/workshop
+My name: &lt;YOUR_NAME&gt;
+
+Please:
+1. Read the Mobius issue and repeat its acceptance criteria.
+2. Ask me for GitHub/Mobius access if needed. Do not stop silently.
+3. Fork or clone the public repository and create:
+   feat/&lt;MOBIUS_ISSUE_ID&gt;-&lt;SHORT_NAME&gt;
+   from upstream/integration/workshop.
+4. Edit only the files allowed by the issue. Do not change shared files or
+   dependencies without host approval.
+5. Implement the feature with the existing fake data and visual language.
+6. Run npm run lint and npm test.
+7. Commit and push the branch.
+8. Open a pull request to:
+   Yongcheng123/hourly-dashboard-practice:integration/workshop
+9. Add a Mobius comment with PR URL, changed files, tests, and any risk.
+10. Move the Mobius issue to In Review.
+
+Never merge the PR yourself. Stop and ask if credentials or approval are needed.</pre>
+        </div>
+        <div class="callout">你的 Issue 会列出唯一允许修改的文件。需要改共享文件、package.json 或 lockfile 时，先在 Mobius 写 BLOCKED，不要自行扩大范围。</div>
+      </section>
+
+      <section class="card" id="sync">
+        <span class="step">3</span>
+        <h2>让进度留在 Mobius</h2>
+        <p>ClickClack 用来协作沟通，Mobius 才是任务状态的正式记录。至少写一次 PLAN，遇阻写 BLOCKED，提交后写 READY。</p>
+        <div class="code">
+          <div class="code-head"><span>Mobius PLAN</span><button class="copy" type="button">一键复制</button></div>
+          <pre>PLAN
+- Files: &lt;ALLOWED_FILES&gt;
+- Approach: &lt;ONE_OR_TWO_SENTENCES&gt;
+- Risk: none | &lt;RISK&gt;</pre>
+        </div>
+        <div class="code">
+          <div class="code-head"><span>Mobius BLOCKED</span><button class="copy" type="button">一键复制</button></div>
+          <pre>BLOCKED
+- Blocker: &lt;WHAT_IS_MISSING&gt;
+- Need from: host | GitHub access | Mobius access | design decision</pre>
+        </div>
+        <div class="code">
+          <div class="code-head"><span>Mobius READY</span><button class="copy" type="button">一键复制</button></div>
+          <pre>READY
+- Branch: &lt;BRANCH_NAME&gt;
+- PR: &lt;PR_URL&gt;
+- Changed files: &lt;FILES&gt;
+- npm run lint: pass | fail
+- npm test: pass | fail
+- Notes: &lt;OPTIONAL&gt;</pre>
+        </div>
+      </section>
+
+      <section class="card" id="pr">
+        <span class="step">4</span>
+        <h2>PR 必须提交到 integration/workshop</h2>
+        <div class="flow">
+          <div>Mobius TAKEN</div><div>独立 Feature Branch</div><div>Lint + Test</div><div>PR → integration</div><div>Mobius READY</div>
+        </div>
+        <ul class="checklist">
+          <li>Base：<code>Yongcheng123/hourly-dashboard-practice:integration/workshop</code></li>
+          <li>Head：自己 Fork 中的 <code>feat/&lt;issue-id&gt;-&lt;name&gt;</code></li>
+          <li>PR 标题包含 Mobius Issue ID。</li>
+          <li>不要直接提交到 main，不要自己 Merge。</li>
+        </ul>
+      </section>
+
+      <section class="card" id="review">
+        <span class="step">5</span>
+        <h2>主持人的 Review Agent 统一验收</h2>
+        <p>主持人给 Review Agent GitHub 和 Mobius 权限后，再粘贴下面 Prompt。它会逐个检查和合并到 integration，并最终创建一个 main PR；最后是否合并 main 仍由真人决定。</p>
+        <div class="code">
+          <div class="code-head"><span>Review Agent Prompt</span><button class="copy" type="button">一键复制</button></div>
+          <pre>You are the integration and review agent for the Hourly Dashboard workshop.
+
+Repository: https://github.com/Yongcheng123/hourly-dashboard-practice
+Mobius project: 周四练习
+Parent issue: AI-2380
+Participant PR base: integration/workshop
+Final branch: main
+
+1. Read the parent and all child issues.
+2. Match every PR targeting integration/workshop to a child issue.
+3. Verify allowed files, acceptance criteria, lint, tests, secrets, responsive
+   layout, and accessibility.
+4. Leave review feedback and update Mobius for incomplete or conflicting PRs.
+5. Merge acceptable PRs into integration/workshop one at a time.
+6. After each merge, rerun npm run lint and npm test.
+7. Move the matching Mobius issue to Done and comment the merge commit.
+8. Open one final PR from integration/workshop to main with a full summary.
+9. Do not merge the final main PR; the human host makes that decision.
+
+If access is missing, ask the host and stop. Never expose credentials.</pre>
+        </div>
+      </section>
+
+      <section class="card" id="host">
+        <h2>主持人 60 分钟时间线</h2>
+        <ul class="checklist">
+          <li><b>0–15 分钟：</b>Phase 1，Hermes Plugin + Bot 连接 + PONG。</li>
+          <li><b>15–20 分钟：</b>讲解 Repo、认领 AI-2381–AI-2388。</li>
+          <li><b>20–45 分钟：</b>各自开发、测试、PR、Mobius READY。</li>
+          <li><b>45–55 分钟：</b>Review Agent 验收并合入 integration。</li>
+          <li><b>55–60 分钟：</b>展示组合效果、最终 PR 和 Mobius 回顾。</li>
+        </ul>
+      </section>
+    </main>
+  </div>
+
+  <footer class="wrap footer">Phase 2 guide · Hourly Dashboard Practice · 后续可持续更新</footer>
+  <script>
+    document.querySelectorAll(".copy").forEach(function(button){
+      button.addEventListener("click",function(){
+        var text=button.closest(".code").querySelector("pre").innerText;
+        navigator.clipboard.writeText(text).then(function(){
+          var old=button.textContent;button.textContent="已复制";
+          setTimeout(function(){button.textContent=old},1200);
+        });
+      });
+    });
+  </script>
+</body>
+</html>
