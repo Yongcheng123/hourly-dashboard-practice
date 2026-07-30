@@ -11,7 +11,7 @@ Target duration: 35–40 minutes of a one-hour workshop.
 
 ## 1. Claim one Mobius issue
 
-Open the Mobius project `周四练习` and parent issue `AI-2380`, choose one open child issue, assign it to
+Open the Mobius team `周四练习` (`THU`) and parent issue `THU-1`, choose one open child issue, assign it to
 yourself, change its status to `In Progress`, and add:
 
 ```text

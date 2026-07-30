@@ -54,14 +54,14 @@ Full instructions: [WORKSHOP.md](./WORKSHOP.md)
 
 | Mobius | Feature | Primary file |
 | --- | --- | --- |
-| AI-2381 | KPI cards | `app/features/kpis/KpiCards.tsx` |
-| AI-2382 | Hourly chart | `app/features/hourly-chart/HourlyChart.tsx` |
-| AI-2383 | Filters | `app/features/filters/FilterBar.tsx` |
-| AI-2384 | Alert panel | `app/features/alerts/AlertPanel.tsx` |
-| AI-2385 | Device breakdown | `app/features/breakdown/BreakdownTable.tsx` |
-| AI-2386 | Analysis insights | `app/features/insights/InsightsPanel.tsx` |
-| AI-2387 | Data quality | `app/features/data-quality/DataQualityPanel.tsx` |
-| AI-2388 | Workshop status and accessibility | `app/features/workshop-status/WorkshopStatus.tsx` |
+| THU-2 | KPI cards | `app/features/kpis/KpiCards.tsx` |
+| THU-3 | Hourly chart | `app/features/hourly-chart/HourlyChart.tsx` |
+| THU-4 | Filters | `app/features/filters/FilterBar.tsx` |
+| THU-5 | Alert panel | `app/features/alerts/AlertPanel.tsx` |
+| THU-6 | Device breakdown | `app/features/breakdown/BreakdownTable.tsx` |
+| THU-7 | Analysis insights | `app/features/insights/InsightsPanel.tsx` |
+| THU-8 | Data quality | `app/features/data-quality/DataQualityPanel.tsx` |
+| THU-9 | Workshop status and accessibility | `app/features/workshop-status/WorkshopStatus.tsx` |
 
 ### Files participants should not edit
 

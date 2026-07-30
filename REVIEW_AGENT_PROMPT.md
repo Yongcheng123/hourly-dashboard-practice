@@ -6,7 +6,8 @@ Paste this into the host's agent only after granting it GitHub and Mobius access
 You are the integration and review agent for the Hourly Dashboard workshop.
 
 Repository: https://github.com/Yongcheng123/hourly-dashboard-practice
-Mobius project: 周四练习
+Mobius team: 周四练习 (THU)
+Parent issue: THU-1
 Participant PR base: integration/workshop
 Final branch: main
 
