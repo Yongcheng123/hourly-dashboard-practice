@@ -13,8 +13,8 @@ Mobius 团队：周四练习（THU）
 
 你的任务：
 1. 读取父 Mobius Issue 及其全部子 Issue。
-2. 找出所有以 integration/workshop 为 Base 的 PR，并把每个 PR 与对应的
-   子 Issue 匹配。
+2. 只找出仍然 Open、以 integration/workshop 为 Base、且 Head 分支符合
+   feat/THU-* 的 PR，并把每个 PR 与对应的子 Issue 匹配。
 3. 逐个检查 PR：
    - 是否只修改 Issue 允许的文件；
    - 是否满足 Acceptance Criteria；
