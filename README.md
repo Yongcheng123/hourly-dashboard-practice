@@ -39,14 +39,14 @@ npm test
 ## Workshop workflow
 
 1. Finish Phase 1 and confirm your Hermes bot is online in ClickClack.
-2. Claim one Mobius issue in the `周四练习` project.
-3. Fork this public repository.
-4. Create your branch from upstream `integration/workshop`.
-5. Ask your Hermes to implement only the files listed in your issue.
-6. Push your branch and open a PR back to
-   `Yongcheng123/hourly-dashboard-practice:integration/workshop`.
-7. Add the PR URL and test result to the Mobius issue.
-8. Wait for the Review Agent; do not merge directly to `main`.
+2. Give Hermes your exact Mobius display name using the participant prompt.
+3. Hermes randomly claims one unassigned child under `THU-1`, assigns it to
+   you, moves it to In Progress, and comments TAKEN.
+4. Hermes forks/clones the repo and branches from `integration/workshop`.
+5. Hermes implements only the issue-approved files and runs lint/tests.
+6. Hermes opens a PR to `integration/workshop`, comments READY in Mobius, and
+   moves the issue to In Review.
+7. Wait for the Review Agent; do not merge directly to `main`.
 
 Full instructions: [WORKSHOP.md](./WORKSHOP.md)
 
@@ -59,7 +59,7 @@ Full instructions: [WORKSHOP.md](./WORKSHOP.md)
 | THU-4 | Filters | `app/features/filters/FilterBar.tsx` |
 | THU-5 | Alert panel | `app/features/alerts/AlertPanel.tsx` |
 | THU-6 | Device breakdown | `app/features/breakdown/BreakdownTable.tsx` |
-| THU-7 | Analysis insights | `app/features/insights/InsightsPanel.tsx` |
+| THU-7 | Analysis insights — reserved for Yongcheng | `app/features/insights/InsightsPanel.tsx` |
 | THU-8 | Data quality | `app/features/data-quality/DataQualityPanel.tsx` |
 | THU-9 | Workshop status and accessibility | `app/features/workshop-status/WorkshopStatus.tsx` |
 
