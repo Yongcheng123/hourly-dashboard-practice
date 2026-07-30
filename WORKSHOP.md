@@ -1,4 +1,4 @@
-# Phase 2 — Automatic Issue to Pull Request
+# 阶段二——从自动认领 Issue 到 Pull Request
 
 Target duration: 35–40 minutes of a one-hour workshop.
 
@@ -12,48 +12,46 @@ Participants do not manually choose or assign issues. Their Hermes finds an
 eligible child under `THU-1`, claims it, keeps Mobius synchronized, implements
 the feature, runs tests, and opens the pull request.
 
-## Participant prompt
+## 参与者 Prompt
 
 Replace only `<YOUR_MOBIUS_USER_NAME>` and paste the whole block into your
 private Hermes Studio conversation:
 
 ```text
-You are my implementation agent for the Hourly Dashboard workshop.
+你是我在 Hourly Dashboard Workshop 中的开发 Agent。
 
-My Mobius user name: <YOUR_MOBIUS_USER_NAME>
-Mobius team: 周四练习 (THU)
-Parent issue: THU-1
-Repository: https://github.com/Yongcheng123/hourly-dashboard-practice
-Participant PR base: integration/workshop
+我的 Mobius 用户名：<YOUR_MOBIUS_USER_NAME>
+Mobius 团队：周四练习（THU）
+父 Issue：THU-1
+代码仓库：https://github.com/Yongcheng123/hourly-dashboard-practice
+参与者 PR 的 Base 分支：integration/workshop
 
-Execute the complete workflow for me:
+请替我完整执行以下流程：
 
-1. Confirm that you can read and update Mobius and can use GitHub. If access is
-   missing, ask me for that access and continue after approval. Do not stop silently.
-2. Read THU-1 and all direct children. Eligible issues must have no assignee, be
-   in Todo or Backlog, and not contain a TAKEN comment from another participant.
-3. Refresh immediately before claiming. Randomly choose one eligible issue,
-   assign it to my exact Mobius user name, set it to In Progress, and add a
-   TAKEN comment with owner, current bot, and current time.
-4. Verify the assignee and state. If someone claimed it first, do not overwrite
-   them; choose another eligible issue. Stop if none remain.
-5. Read the full issue and acceptance criteria. Add a PLAN comment with allowed
-   files, approach, and risks. Do not ask me to post that comment manually.
-6. Fork or clone the repository and create
-   feat/<CLAIMED_ISSUE_ID>-<SHORT_NAME>
-   from upstream/integration/workshop.
-7. Edit only files allowed by the issue. Do not modify shared shell, CSS,
-   data/types, package.json, or lockfile unless explicitly allowed.
-8. Implement with fake data, responsive layout, and accessible behavior.
-9. If blocked, add a BLOCKED comment to Mobius and then ask me for access or a
-   decision. Do not ask me to write the comment manually.
-10. Run npm run lint and npm test; fix failures within the allowed scope.
-11. Commit, push, and open a PR to
-    Yongcheng123/hourly-dashboard-practice:integration/workshop.
-    The PR title must include the claimed Mobius issue ID.
-12. Add a READY comment with branch, PR URL, files, tests, and risks. Move the
-    issue to In Review. Do not ask me to post the comment manually.
-13. Report the issue, branch, PR, tests, and human-review items. Never merge.
+1. 确认你可以读取和更新 Mobius，并且可以使用 GitHub。如果缺少权限，
+   立即向我申请 Access；我批准后继续执行，不要静默停止。
+2. 读取 THU-1 及其所有直接子 Issue。可认领的 Issue 必须没有 Assignee、
+   状态为 Todo 或 Backlog，并且没有其他参与者留下的 TAKEN 评论。
+3. 在认领前立即刷新列表，随机选择一个符合条件的 Issue，分配给我提供的准确
+   Mobius 用户名，改为 In Progress，并添加包含 Owner、当前 Bot 和时间的
+   TAKEN 评论。
+4. 验证 Assignee 和状态。如果其他参与者抢先认领，不要覆盖对方，改选另一个。
+   如果没有可用 Issue，停止并告诉我。
+5. 阅读完整 Issue 和 Acceptance Criteria，直接添加包含允许文件、方案和风险的
+   PLAN 评论，不要让我手动填写。
+6. Fork 或 Clone 仓库，以 upstream/integration/workshop 为起点创建
+   feat/<CLAIMED_ISSUE_ID>-<SHORT_NAME>。
+7. 只修改 Issue 允许的文件；除非明确允许，不要修改共享 Shell、CSS、
+   data/types、package.json 或 lockfile。
+8. 使用 Fake Data 完成功能，并保持响应式和可访问。
+9. 如遇阻塞，先在 Mobius 添加 BLOCKED 评论，再向我申请 Access 或决策。
+10. 运行 npm run lint 和 npm test，并在允许范围内修复失败项。
+11. Commit、Push，并向
+    Yongcheng123/hourly-dashboard-practice:integration/workshop 创建 PR；
+    PR 标题必须包含 Mobius Issue ID。
+12. 添加包含 Branch、PR URL、文件、测试和风险的 READY 评论，把 Issue 改为
+    In Review；不要让我手动填写。
+13. 最后只报告 Issue、Branch、PR、测试和需人工检查的事项。绝不自行合并。
 ```
 
 ## Reserved host task
