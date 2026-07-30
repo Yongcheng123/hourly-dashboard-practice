@@ -1,12 +1,12 @@
 # Hourly Dashboard Practice
 
 A public, fixed-snapshot workshop project for practicing multi-person, multi-agent
-delivery with Hermes, ClickClack, Mobius, and GitHub.
+delivery with Hermes, ClickClack, Mobius, and a host-managed GitHub integration.
 
 The repository already contains a working generic hourly dashboard. During the
-workshop, each participant improves one isolated feature module, opens a pull
-request against `integration/workshop`, and synchronizes progress back to the
-matching Mobius issue. A Review Agent checks and combines the pull requests.
+workshop, each participant improves one isolated feature module and uploads a
+Git Patch to the matching Mobius issue. A Review Agent checks and applies the
+patches, then creates the final GitHub pull request.
 
 ## What is already included
 
@@ -30,7 +30,7 @@ npm install
 npm run dev
 ```
 
-Verify before opening a pull request:
+Verify before generating a patch:
 
 ```bash
 npm run lint
@@ -43,11 +43,11 @@ npm test
 2. Give Hermes your exact Mobius display name using the participant prompt.
 3. Hermes randomly claims one unassigned child under `THU-1`, assigns it to
    you, moves it to In Progress, and comments TAKEN.
-4. Hermes forks/clones the repo and branches from `integration/workshop`.
+4. Hermes anonymously clones the repo and branches from `integration/workshop`.
 5. Hermes implements only the issue-approved files and runs lint/tests.
-6. Hermes opens a PR to `integration/workshop`, comments READY in Mobius, and
-   moves the issue to In Review.
-7. Wait for the Review Agent; do not merge directly to `main`.
+6. Hermes creates a `.patch`, uploads it to Mobius, comments READY, and moves
+   the issue to In Review.
+7. The Review Agent applies accepted patches and opens the final PR.
 
 Full instructions: [WORKSHOP.md](./WORKSHOP.md)
 
@@ -66,7 +66,7 @@ Full instructions: [WORKSHOP.md](./WORKSHOP.md)
 
 ### Files participants should not edit
 
-To keep PRs mergeable, participants must not change these unless their Mobius
+To keep patches independently applicable, participants must not change these unless their Mobius
 issue explicitly allows it:
 
 - `app/components/dashboard/DashboardShell.tsx`
@@ -107,8 +107,8 @@ components.
 ## Branches
 
 - `main`: stable workshop baseline and final accepted result
-- `integration/workshop`: base branch for all participant PRs
-- `feat/<mobius-id>-<short-name>`: one participant branch per issue
+- `integration/workshop`: base branch used to generate every participant patch
+- `feat/<mobius-id>-<short-name>`: local participant branch used to create a patch
 
 ## License
 
