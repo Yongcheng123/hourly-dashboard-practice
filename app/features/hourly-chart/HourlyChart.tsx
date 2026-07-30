@@ -5,10 +5,10 @@ export function HourlyChart({ points }: { points: HourlyPoint[] }) {
     <article className="card chart-card">
       <div className="section-heading">
         <div>
-          <h2>Spend vs. conversions</h2>
-          <p className="subtle">Normalized hourly movement</p>
+          <h2>Gross spend vs. installs</h2>
+          <p className="subtle">Chime cumulative movement · every two hours</p>
         </div>
-        <span className="chip">■ Spend &nbsp; ■ Conversions</span>
+        <span className="chip">■ Gross spend &nbsp; ■ Installs</span>
       </div>
       <div className="chart" aria-label="Hourly spend and conversions chart">
         {points.map((point) => (

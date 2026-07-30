@@ -30,8 +30,8 @@ test("server-renders the hourly dashboard scaffold", async () => {
   const html = await response.text();
   assert.match(html, /<title>Hourly Pulse · Workshop Dashboard<\/title>/i);
   assert.match(html, /Hourly performance/);
-  assert.match(html, /Mock data mode/);
-  assert.match(html, /Spend vs\. conversions/);
-  assert.match(html, /Device breakdown/);
+  assert.match(html, /Chime snapshot/);
+  assert.match(html, /Gross spend vs\. installs/);
+  assert.match(html, /Five-day daily totals/);
   assert.match(html, /Mobius/);
 });

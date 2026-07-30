@@ -5,20 +5,20 @@ export function BreakdownTable({ rows }: { rows: BreakdownRow[] }) {
     <article className="card table-card">
       <div className="section-heading">
         <div>
-          <h2>Device breakdown</h2>
-          <p className="subtle">Contribution to today&apos;s delivery</p>
+          <h2>Five-day daily totals</h2>
+          <p className="subtle">Chime snapshot · July 24–28</p>
         </div>
-        <span className="chip">Sorted by spend</span>
+        <span className="chip">Original FeedTV values</span>
       </div>
       <div style={{ overflowX: "auto" }}>
         <table>
           <thead>
             <tr>
-              <th>Environment</th>
-              <th>Spend</th>
-              <th>Conversions</th>
-              <th>CPA</th>
-              <th>Share</th>
+              <th>Date</th>
+              <th>Gross spend</th>
+              <th>Installs</th>
+              <th>Gross CPI</th>
+              <th>5-day share</th>
             </tr>
           </thead>
           <tbody>

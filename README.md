@@ -1,6 +1,6 @@
 # Hourly Dashboard Practice
 
-A public, fake-data workshop project for practicing multi-person, multi-agent
+A public, fixed-snapshot workshop project for practicing multi-person, multi-agent
 delivery with Hermes, ClickClack, Mobius, and GitHub.
 
 The repository already contains a working generic hourly dashboard. During the
@@ -11,14 +11,14 @@ matching Mobius issue. A Review Agent checks and combines the pull requests.
 ## What is already included
 
 - a responsive hourly operations dashboard
-- fake performance, conversion, pacing, alert, and device data
+- original Chime FeedTV hourly data for July 24–28, 2026
 - eight isolated feature folders to reduce merge conflicts
 - a shared integration branch: `integration/workshop`
 - participant and Review Agent prompts
 - build, lint, and server-render tests
 
-No production credentials, Beeswax connection, or MCP access is required for
-the one-hour exercise.
+The captured snapshot needs no production credentials or live Beeswax
+connection during the one-hour exercise.
 
 ## Run locally
 
@@ -58,7 +58,7 @@ Full instructions: [WORKSHOP.md](./WORKSHOP.md)
 | THU-3 | Hourly chart | `app/features/hourly-chart/HourlyChart.tsx` |
 | THU-4 | Filters | `app/features/filters/FilterBar.tsx` |
 | THU-5 | Alert panel | `app/features/alerts/AlertPanel.tsx` |
-| THU-6 | Device breakdown | `app/features/breakdown/BreakdownTable.tsx` |
+| THU-6 | Daily breakdown | `app/features/breakdown/BreakdownTable.tsx` |
 | THU-7 | Analysis insights — reserved for Yongcheng | `app/features/insights/InsightsPanel.tsx` |
 | THU-8 | Data quality | `app/features/data-quality/DataQualityPanel.tsx` |
 | THU-9 | Workshop status and accessibility | `app/features/workshop-status/WorkshopStatus.tsx` |
@@ -79,10 +79,17 @@ ask the host before changing it.
 
 ## Data architecture
 
-The UI reads typed fake data from `app/data/mockDashboard.ts`. This deliberately
-keeps the workshop independent of internal data systems. A future production
-iteration can replace this file with a provider adapter backed by Beeswax MCP,
-an API, or a warehouse while keeping the feature components.
+The UI reads 120 original Chime rows (24 hourly rows for each day from
+2026-07-24 through 2026-07-28) from `app/data/chimeHourlyWeek.ts`.
+`app/data/mockDashboard.ts` adapts those rows into the existing workshop
+components. The date selector changes the displayed Chime day. Missing values
+from the source are preserved as `null`, and all 18 source metrics remain
+available for later feature work.
+
+This fixed snapshot keeps the workshop independent of internal credentials. A
+future production iteration can replace the data module with a provider adapter
+backed by Beeswax MCP, an API, or a warehouse while keeping the feature
+components.
 
 ## Branches
 

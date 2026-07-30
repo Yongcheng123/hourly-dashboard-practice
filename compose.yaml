@@ -1,0 +1,8 @@
+services:
+  hourly-dashboard:
+    build:
+      context: .
+    container_name: hourly-dashboard-practice
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:${HOURLY_DASHBOARD_PORT:-3010}:3000"

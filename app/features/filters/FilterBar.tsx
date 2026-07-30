@@ -20,10 +20,7 @@ export function FilterBar({
           value={account}
           onChange={(event) => onAccountChange(event.target.value)}
         >
-          <option>All accounts</option>
-          <option>Northstar Mobile</option>
-          <option>Atlas Streaming</option>
-          <option>Nova Commerce</option>
+          <option>Chime · Freewheel FM · LG PMP</option>
         </select>
       </div>
       <div className="field">
@@ -31,16 +28,16 @@ export function FilterBar({
         <input
           id="date"
           type="date"
+          min="2026-07-24"
+          max="2026-07-28"
           value={date}
           onChange={(event) => onDateChange(event.target.value)}
         />
       </div>
       <div className="field">
         <label htmlFor="timezone">Timezone</label>
-        <select id="timezone" defaultValue="America/New_York">
-          <option>America/New_York</option>
-          <option>America/Los_Angeles</option>
-          <option>Asia/Shanghai</option>
+        <select id="timezone" defaultValue="EST">
+          <option>EST</option>
         </select>
       </div>
       <button className="secondary-button" type="button">Export view</button>

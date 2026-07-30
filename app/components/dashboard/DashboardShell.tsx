@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { mockDashboard } from "../../data/mockDashboard";
+import { getDashboardForDate } from "../../data/mockDashboard";
 import { AlertPanel } from "../../features/alerts/AlertPanel";
 import { BreakdownTable } from "../../features/breakdown/BreakdownTable";
 import { DataQualityPanel } from "../../features/data-quality/DataQualityPanel";
@@ -12,9 +12,10 @@ import { KpiCards } from "../../features/kpis/KpiCards";
 import { WorkshopStatus } from "../../features/workshop-status/WorkshopStatus";
 
 export function DashboardShell() {
-  const [account, setAccount] = useState("All accounts");
+  const [account, setAccount] = useState("Chime · Freewheel FM · LG PMP");
   const [date, setDate] = useState("2026-07-28");
 
+  const dashboard = useMemo(() => getDashboardForDate(date), [date]);
   const contextLabel = useMemo(
     () => `${account} · ${date}`,
     [account, date],
@@ -37,8 +38,8 @@ export function DashboardShell() {
         <p className="nav-label">Workshop</p>
         <button className="nav-item">✓ <span>Task status</span></button>
         <div className="sidebar-note">
-          <b>Mock data mode</b>
-          <span>Safe for the workshop. No production credentials required.</span>
+          <b>Chime snapshot</b>
+          <span>Five original FeedTV days. No live credentials required.</span>
         </div>
       </aside>
 
@@ -47,9 +48,9 @@ export function DashboardShell() {
           <div>
             <p className="eyebrow">Performance control room</p>
             <h1>Hourly performance</h1>
-            <p className="subtle">{contextLabel} · updated 2 minutes ago</p>
+            <p className="subtle">{contextLabel} · 24 hourly rows · EST</p>
           </div>
-          <span className="live-pill"><span className="live-dot" />Data healthy</span>
+          <span className="live-pill"><span className="live-dot" />Snapshot ready</span>
         </header>
 
         <FilterBar
@@ -58,17 +59,17 @@ export function DashboardShell() {
           onAccountChange={setAccount}
           onDateChange={setDate}
         />
-        <KpiCards items={mockDashboard.kpis} />
+        <KpiCards items={dashboard.kpis} />
 
         <section className="grid-main">
-          <HourlyChart points={mockDashboard.hourly} />
-          <AlertPanel alerts={mockDashboard.alerts} />
+          <HourlyChart points={dashboard.hourly} />
+          <AlertPanel alerts={dashboard.alerts} />
         </section>
 
         <section className="grid-bottom">
-          <BreakdownTable rows={mockDashboard.breakdown} />
+          <BreakdownTable rows={dashboard.breakdown} />
           <div className="stack">
-            <InsightsPanel points={mockDashboard.hourly} />
+            <InsightsPanel points={dashboard.hourly} />
             <DataQualityPanel />
             <WorkshopStatus />
           </div>
