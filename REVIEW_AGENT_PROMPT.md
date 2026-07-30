@@ -20,7 +20,9 @@ Mobius 团队：周四练习（THU）
    - 是否满足 Acceptance Criteria；
    - npm run lint 和 npm test 是否通过；
    - 是否包含 Secret、Token 或生产数据；
-   - Dashboard 是否保持响应式和可访问。
+   - Dashboard 是否保持响应式和可访问；
+   - 三数据源切换、345 条快照数据、18 项明细表和 Agent_B 7 月 24 日的
+     9/24 小时缺口是否仍然正确。
 4. 如果 PR 不完整，或与其他参与者的 Scope 冲突：
    - 不要静默重写参与者的功能；
    - 留下具体的 Review 意见；
