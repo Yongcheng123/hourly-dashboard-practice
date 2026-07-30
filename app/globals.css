@@ -266,7 +266,7 @@ h1 {
 
 .kpi-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 14px;
   margin-bottom: 18px;
 }
@@ -315,10 +315,57 @@ h1 {
 .chart-card,
 .alert-card,
 .table-card,
+.source-comparison-card,
+.raw-table-card,
 .insight-card,
 .quality-card,
 .status-card {
   padding: 20px;
+}
+
+.source-comparison-card,
+.raw-table-card {
+  margin-bottom: 18px;
+}
+
+.table-scroll,
+.raw-table-scroll {
+  overflow-x: auto;
+}
+
+.raw-table-scroll {
+  border: 1px solid #edf0ec;
+  border-radius: 13px;
+}
+
+.raw-table-scroll:focus {
+  outline: 2px solid var(--mint);
+  outline-offset: 2px;
+}
+
+.raw-table {
+  min-width: 1760px;
+}
+
+.raw-table th,
+.raw-table td {
+  white-space: nowrap;
+}
+
+.raw-table th:first-child,
+.raw-table td:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  background: var(--card);
+}
+
+.raw-table thead th:first-child {
+  z-index: 2;
+}
+
+.selected-row {
+  background: #eefaf3;
 }
 
 .section-heading {

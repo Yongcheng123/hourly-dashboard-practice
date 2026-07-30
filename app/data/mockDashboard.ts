@@ -1,12 +1,36 @@
 import type { DashboardData, Kpi } from "../types/dashboard";
 import {
+  chimeSources,
+  defaultChimeSource,
+  getChimeRows,
+  getChimeSource,
+} from "./chimeCatalog";
+import {
   chimeDates,
-  chimeHourlyRows,
-  chimeRowsByDate,
   type ChimeHourlyRow,
+  type ChimeSourceId,
 } from "./chimeHourlyWeek";
 
-export { chimeDates, chimeHourlyRows };
+export { chimeDates, chimeSources, defaultChimeSource };
+
+export type SourceComparisonRow = {
+  sourceId: ChimeSourceId;
+  sourceName: string;
+  rowCount: number;
+  impressions: number | null;
+  installs: number;
+  enrollments: number;
+  grossSpend: number;
+  grossCpi: number | null;
+  cvr: number | null;
+};
+
+export type DashboardView = DashboardData & {
+  sourceId: ChimeSourceId;
+  sourceName: string;
+  rawRows: ChimeHourlyRow[];
+  comparison: SourceComparisonRow[];
+};
 
 const currency = new Intl.NumberFormat("en-US", {
   style: "currency",
@@ -29,11 +53,6 @@ const hourNumber = (hour: string) => {
 
 const last = (rows: ChimeHourlyRow[]) => rows.at(-1)!;
 
-const dailyTotals = chimeDates.map((date) => ({
-  date,
-  row: last(chimeRowsByDate[date]),
-}));
-
 const makeKpi = (
   label: string,
   value: string,
@@ -53,19 +72,27 @@ const makeKpi = (
   };
 };
 
-export function getDashboardForDate(date: string): DashboardData {
+export function getDashboard(
+  sourceId: string,
+  date: string,
+): DashboardView {
   const selectedDate = chimeDates.includes(date as (typeof chimeDates)[number])
     ? (date as (typeof chimeDates)[number])
     : chimeDates.at(-1)!;
-  const rows = chimeRowsByDate[selectedDate];
+  const source = getChimeSource(sourceId);
+  const rows = getChimeRows(source.id, selectedDate);
   const total = last(rows);
   const dateIndex = chimeDates.indexOf(selectedDate);
-  const previous =
-    dateIndex > 0 ? last(chimeRowsByDate[chimeDates[dateIndex - 1]]) : undefined;
+  const previousRows =
+    dateIndex > 0 ? getChimeRows(source.id, chimeDates[dateIndex - 1]) : [];
+  const previous = previousRows.length ? last(previousRows) : undefined;
   const maxSpend = Math.max(...rows.map((row) => row.grossSpend), 1);
   const maxInstalls = Math.max(...rows.map((row) => row.installs), 1);
-  const priorRows =
-    dateIndex > 0 ? chimeRowsByDate[chimeDates[dateIndex - 1]] : rows;
+  const priorRows = previousRows.length ? previousRows : rows;
+  const dailyTotals = chimeDates.map((day) => ({
+    date: day,
+    row: last(getChimeRows(source.id, day)),
+  }));
   const missingCells = rows.reduce(
     (sum, row) =>
       sum +
@@ -86,14 +113,40 @@ export function getDashboardForDate(date: string): DashboardData {
     (sum, item) => sum + item.row.grossSpend,
     0,
   );
+  const comparison = chimeSources.map((item) => {
+    const sourceRows = getChimeRows(item.id, selectedDate);
+    const sourceTotal = last(sourceRows);
+
+    return {
+      sourceId: item.id,
+      sourceName: item.shortName,
+      rowCount: sourceRows.length,
+      impressions: sourceTotal.impressions,
+      installs: sourceTotal.installs,
+      enrollments: sourceTotal.enrollTotal,
+      grossSpend: sourceTotal.grossSpend,
+      grossCpi: sourceTotal.grossCpi,
+      cvr: sourceTotal.cvr,
+    };
+  });
 
   return {
+    sourceId: source.id,
+    sourceName: source.name,
+    rawRows: rows,
+    comparison,
     kpis: [
       makeKpi(
         "Gross spend",
         currency.format(total.grossSpend),
         total.grossSpend,
         previous?.grossSpend,
+      ),
+      makeKpi(
+        "Impressions",
+        total.impressions?.toLocaleString() ?? "—",
+        total.impressions ?? 0,
+        previous?.impressions,
       ),
       makeKpi(
         "Installs",
@@ -114,9 +167,16 @@ export function getDashboardForDate(date: string): DashboardData {
         previous?.grossCpi,
         true,
       ),
+      makeKpi(
+        "Gross CPM",
+        total.grossCpm === null ? "—" : currency.format(total.grossCpm),
+        total.grossCpm ?? 0,
+        previous?.grossCpm,
+        true,
+      ),
     ],
     hourly: rows
-      .filter((_, index) => index % 2 === 0)
+      .filter((_, index) => index % 2 === 0 || index === rows.length - 1)
       .map((row, index) => ({
         hour: String(hourNumber(row.hour)).padStart(2, "0"),
         spend: Math.max(4, Math.round((row.grossSpend / maxSpend) * 100)),
@@ -134,15 +194,19 @@ export function getDashboardForDate(date: string): DashboardData {
       })),
     alerts: [
       {
-        severity: missingCells > 0 ? "high" : "medium",
+        severity: rows.length < 24 || missingCells > 0 ? "high" : "medium",
         title:
-          missingCells > 0
-            ? `${missingCells} source values unavailable`
-            : "All source metrics present",
+          rows.length < 24
+            ? `Partial source day: ${rows.length}/24 rows`
+            : missingCells > 0
+              ? `${missingCells} source values unavailable`
+              : "All source metrics present",
         detail:
-          missingCells > 0
-            ? `The Chime sheet returned “-” for ${missingCells} metric cells on ${selectedDate}; the snapshot preserves them as null.`
-            : `All 24 Chime hourly rows contain the core delivery metrics for ${selectedDate}.`,
+          rows.length < 24
+            ? `${source.shortName} contains only ${rows.length} captured hours on ${selectedDate}; this mirrors FeedTV.`
+            : missingCells > 0
+              ? `FeedTV returned “-” for ${missingCells} metric cells; the snapshot preserves them as null.`
+              : `All 24 hourly rows contain the core delivery metrics for ${selectedDate}.`,
       },
       {
         severity: "medium",
@@ -153,7 +217,7 @@ export function getDashboardForDate(date: string): DashboardData {
         severity: "medium",
         title: "Historical workshop snapshot",
         detail:
-          "Values are the original Chime FeedTV snapshot for July 24–28, not a live API feed.",
+          "Values are the original three-source Chime FeedTV snapshot for July 24–28, not a live API feed.",
       },
     ],
     breakdown: dailyTotals.map(({ date: day, row }) => ({
@@ -166,4 +230,10 @@ export function getDashboardForDate(date: string): DashboardData {
   };
 }
 
-export const mockDashboard = getDashboardForDate(chimeDates.at(-1)!);
+export const getDashboardForDate = (date: string) =>
+  getDashboard(defaultChimeSource, date);
+
+export const mockDashboard = getDashboard(
+  defaultChimeSource,
+  chimeDates.at(-1)!,
+);

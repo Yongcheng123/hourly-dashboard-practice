@@ -1,26 +1,30 @@
+import { chimeSources } from "../../data/chimeCatalog";
+
 type FilterBarProps = {
-  account: string;
+  source: string;
   date: string;
-  onAccountChange: (value: string) => void;
+  onSourceChange: (value: string) => void;
   onDateChange: (value: string) => void;
 };
 
 export function FilterBar({
-  account,
+  source,
   date,
-  onAccountChange,
+  onSourceChange,
   onDateChange,
 }: FilterBarProps) {
   return (
     <section className="filter-bar" aria-label="Dashboard filters">
       <div className="field">
-        <label htmlFor="account">Account</label>
+        <label htmlFor="source">Chime data source</label>
         <select
-          id="account"
-          value={account}
-          onChange={(event) => onAccountChange(event.target.value)}
+          id="source"
+          value={source}
+          onChange={(event) => onSourceChange(event.target.value)}
         >
-          <option>Chime · Freewheel FM · LG PMP</option>
+          {chimeSources.map((item) => (
+            <option value={item.id} key={item.id}>{item.name}</option>
+          ))}
         </select>
       </div>
       <div className="field">

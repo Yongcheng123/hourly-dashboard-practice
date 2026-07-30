@@ -1,7 +1,10 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { getDashboardForDate } from "../../data/mockDashboard";
+import {
+  defaultChimeSource,
+  getDashboard,
+} from "../../data/mockDashboard";
 import { AlertPanel } from "../../features/alerts/AlertPanel";
 import { BreakdownTable } from "../../features/breakdown/BreakdownTable";
 import { DataQualityPanel } from "../../features/data-quality/DataQualityPanel";
@@ -10,15 +13,20 @@ import { HourlyChart } from "../../features/hourly-chart/HourlyChart";
 import { InsightsPanel } from "../../features/insights/InsightsPanel";
 import { KpiCards } from "../../features/kpis/KpiCards";
 import { WorkshopStatus } from "../../features/workshop-status/WorkshopStatus";
+import { RawHourlyTable } from "./RawHourlyTable";
+import { SourceComparisonTable } from "./SourceComparisonTable";
 
 export function DashboardShell() {
-  const [account, setAccount] = useState("Chime · Freewheel FM · LG PMP");
+  const [source, setSource] = useState(defaultChimeSource);
   const [date, setDate] = useState("2026-07-28");
 
-  const dashboard = useMemo(() => getDashboardForDate(date), [date]);
+  const dashboard = useMemo(
+    () => getDashboard(source, date),
+    [source, date],
+  );
   const contextLabel = useMemo(
-    () => `${account} · ${date}`,
-    [account, date],
+    () => `${dashboard.sourceName} · ${date}`,
+    [dashboard.sourceName, date],
   );
 
   return (
@@ -39,7 +47,7 @@ export function DashboardShell() {
         <button className="nav-item">✓ <span>Task status</span></button>
         <div className="sidebar-note">
           <b>Chime snapshot</b>
-          <span>Five original FeedTV days. No live credentials required.</span>
+          <span>Three FeedTV sources, five report dates, all 18 metrics.</span>
         </div>
       </aside>
 
@@ -48,29 +56,39 @@ export function DashboardShell() {
           <div>
             <p className="eyebrow">Performance control room</p>
             <h1>Hourly performance</h1>
-            <p className="subtle">{contextLabel} · 24 hourly rows · EST</p>
+            <p className="subtle">{contextLabel} · {dashboard.rawRows.length}/24 hourly rows · EST</p>
           </div>
           <span className="live-pill"><span className="live-dot" />Snapshot ready</span>
         </header>
 
         <FilterBar
-          account={account}
+          source={source}
           date={date}
-          onAccountChange={setAccount}
+          onSourceChange={setSource}
           onDateChange={setDate}
         />
         <KpiCards items={dashboard.kpis} />
+
+        <SourceComparisonTable
+          rows={dashboard.comparison}
+          selectedSource={dashboard.sourceId}
+        />
 
         <section className="grid-main">
           <HourlyChart points={dashboard.hourly} />
           <AlertPanel alerts={dashboard.alerts} />
         </section>
 
+        <RawHourlyTable
+          rows={dashboard.rawRows}
+          sourceName={dashboard.sourceName}
+        />
+
         <section className="grid-bottom">
           <BreakdownTable rows={dashboard.breakdown} />
           <div className="stack">
             <InsightsPanel points={dashboard.hourly} />
-            <DataQualityPanel />
+            <DataQualityPanel rowCount={dashboard.rawRows.length} />
             <WorkshopStatus />
           </div>
         </section>

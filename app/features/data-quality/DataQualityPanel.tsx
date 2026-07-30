@@ -1,10 +1,10 @@
-const checks = [
-  ["Spend freshness", "2 min"],
-  ["Conversion freshness", "17 min"],
-  ["Rows validated", "99.8%"],
-];
+export function DataQualityPanel({ rowCount }: { rowCount: number }) {
+  const checks = [
+    ["Hourly coverage", `${rowCount}/24`],
+    ["Chime sources", "3"],
+    ["Snapshot dates", "5"],
+  ];
 
-export function DataQualityPanel() {
   return (
     <article className="card quality-card">
       <div className="card-heading">
@@ -12,7 +12,7 @@ export function DataQualityPanel() {
           <h2>Data quality</h2>
           <p className="subtle">Source readiness and freshness</p>
         </div>
-        <span className="score">Healthy</span>
+        <span className="score">{rowCount === 24 ? "Complete" : "Partial"}</span>
       </div>
       <div className="quality-list" style={{ marginTop: 10 }}>
         {checks.map(([label, value]) => (
