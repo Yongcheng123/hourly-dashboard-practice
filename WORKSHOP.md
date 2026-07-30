@@ -41,9 +41,11 @@ Mobius 团队：周四练习（THU）
    PLAN 评论，不要让我手动填写。
 6. Fork 或 Clone 仓库，以 upstream/integration/workshop 为起点创建
    feat/<CLAIMED_ISSUE_ID>-<SHORT_NAME>。
-7. 只修改 Issue 允许的文件；除非明确允许，不要修改共享 Shell、CSS、
-   data/types、package.json 或 lockfile。
-8. 使用 Fake Data 完成功能，并保持响应式和可访问。
+7. 只修改 Issue 允许的文件；除非明确允许，不要修改 DashboardShell、
+   RawHourlyTable、SourceComparisonTable、globals.css、Chime 数据文件、
+   共享 data/types、package.json 或 lockfile。
+8. 使用仓库内置的三张 Chime 固定快照完成功能；不连接实时 API，不伪造
+   Agent_B 缺失小时，并保持响应式和可访问。
 9. 如遇阻塞，先在 Mobius 添加 BLOCKED 评论，再向我申请 Access 或决策。
 10. 运行 npm run lint 和 npm test，并在允许范围内修复失败项。
 11. Commit、Push，并向
